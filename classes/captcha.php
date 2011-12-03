@@ -180,6 +180,9 @@ abstract class Captcha
 		// Challenge result
 		$result = (bool) (sha1(strtoupper($response)) === Session::instance()->get('captcha_response'));
 
+		// delete the response, so each token can be used only once
+		Session::instance()->delete('captcha_response');
+		
 		// Increment response counter
 		if ($counted !== TRUE)
 		{
