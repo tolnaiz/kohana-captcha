@@ -434,10 +434,11 @@ abstract class Captcha
 			return '<img src="'.url::site('captcha/'.Captcha::$config['group']).'" width="'.Captcha::$config['width'].'" height="'.Captcha::$config['height'].'" alt="Captcha" class="captcha" />';
 
 		// Send the correct HTTP header
-		$this->request->headers('Content-Type','image/'.$this->image_type);
-		$this->request->headers('Cache-Control','no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
-		$this->request->headers('Pragma','no-cache');
-		$this->request->headers('Connection','close');
+		$cur_resp = Request::current()->response();
+		$cur_resp->headers('Content-Type','image/'.$this->image_type);
+		$cur_resp->headers('Cache-Control','no-store, no-cache, must-revalidate, post-check=0, pre-check=0');
+		$cur_resp->headers('Pragma','no-cache');
+		$cur_resp->headers('Connection','close');
 
 		// Pick the correct output function
 		$function = 'image'.$this->image_type;
